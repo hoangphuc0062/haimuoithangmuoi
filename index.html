@@ -26,8 +26,10 @@
 
 </head>
     <body>
-			<audio autoplay="autoplay" >
-					<source src="music/nhac.mp3" type="audio/mp3" />
+			<audio id="backgroundMusic" preload="auto" loop>
+					<source src="./music/nhac.mp3" type="audio/mpeg" />
+					<source src="./music/I-Do-911.mp3" type="audio/mpeg" />
+					Trình duyệt của bạn không hỗ trợ phát nhạc.
             </audio>
         <div id="main">
             <div id="error"></div>
@@ -56,6 +58,55 @@
             
         </div>
     <script>
+        // Xử lý phát nhạc nền
+        document.addEventListener('DOMContentLoaded', function() {
+            const audio = document.getElementById('backgroundMusic');
+            
+            // Thử phát nhạc khi trang load
+            function playMusic() {
+                if (audio) {
+                    audio.play().catch(function(error) {
+                        console.log('Autoplay bị chặn:', error);
+                        // Hiển thị nút play nếu autoplay bị chặn
+                        showPlayButton();
+                    });
+                }
+            }
+            
+            // Hiển thị nút play nếu cần
+            function showPlayButton() {
+                const playButton = document.createElement('button');
+                playButton.innerHTML = '🎵 Nhấn để phát nhạc';
+                playButton.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    z-index: 1000;
+                    background: #BE1A25;
+                    color: white;
+                    border: none;
+                    padding: 10px 15px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-size: 14px;
+                `;
+                playButton.onclick = function() {
+                    audio.play();
+                    this.remove();
+                };
+                document.body.appendChild(playButton);
+            }
+            
+            // Phát nhạc khi user tương tác
+            document.addEventListener('click', function() {
+                if (audio.paused) {
+                    audio.play();
+                }
+            }, { once: true });
+            
+            // Thử phát nhạc ngay
+            playMusic();
+        });
     </script>
 
     <script>
@@ -135,6 +186,13 @@
                 hold = 0; 
                 // Fade text bằng CSS
                 $('#love-text').addClass('fade-out');
+                // Phát nhạc khi click vào trái tim
+                var audio = document.getElementById('backgroundMusic');
+                if (audio && audio.paused) {
+                    audio.play().catch(function(error) {
+                        console.log('Không thể phát nhạc:', error);
+                    });
+                }
                 canvas.unbind("click");
                 canvas.unbind("mousemove");
                 canvas.removeClass('hand');

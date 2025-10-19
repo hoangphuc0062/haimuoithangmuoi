@@ -58,58 +58,6 @@
             
         </div>
     <script>
-        // Xử lý phát nhạc nền
-        document.addEventListener('DOMContentLoaded', function() {
-            const audio = document.getElementById('backgroundMusic');
-            
-            // Thử phát nhạc khi trang load
-            function playMusic() {
-                if (audio) {
-                    audio.play().catch(function(error) {
-                        console.log('Autoplay bị chặn:', error);
-                        // Hiển thị nút play nếu autoplay bị chặn
-                        showPlayButton();
-                    });
-                }
-            }
-            
-            // Hiển thị nút play nếu cần
-            function showPlayButton() {
-                const playButton = document.createElement('button');
-                playButton.innerHTML = '🎵 Nhấn để phát nhạc';
-                playButton.style.cssText = `
-                    position: fixed;
-                    top: 20px;
-                    right: 20px;
-                    z-index: 1000;
-                    background: #BE1A25;
-                    color: white;
-                    border: none;
-                    padding: 10px 15px;
-                    border-radius: 5px;
-                    cursor: pointer;
-                    font-size: 14px;
-                `;
-                playButton.onclick = function() {
-                    audio.play();
-                    this.remove();
-                };
-                document.body.appendChild(playButton);
-            }
-            
-            // Phát nhạc khi user tương tác
-            document.addEventListener('click', function() {
-                if (audio.paused) {
-                    audio.play();
-                }
-            }, { once: true });
-            
-            // Thử phát nhạc ngay
-            playMusic();
-        });
-    </script>
-
-    <script>
     (function(){
         var canvas = $('#canvas');
 		
@@ -169,7 +117,7 @@
             $('#love-text').css({
                 left: heartPoint.x + 'px',
                 top: (heartPoint.y + 10 * scale * 0.75) + 'px',
-                fontSize: (12 * scale * 0.75) + 'px'
+                fontSize: (24 * scale * 0.75) + 'px'
             });
         }
         
